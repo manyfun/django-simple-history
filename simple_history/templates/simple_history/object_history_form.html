@@ -5,8 +5,8 @@
 {% block breadcrumbs %}
   <div class="breadcrumbs">
     <a href="{% url "admin:index" %}">{% trans "Home" %}</a> &rsaquo;
-    <a href="{% url "admin:app_list" app_label %}">{{app_label|capfirst|escape}}</a> &rsaquo;
-    <a href="{{changelist_url}}">{{opts.verbose_name_plural|capfirst}}</a> &rsaquo;
+    <a href="{% url 'admin:app_list' app_label=original_opts.app_config.label %}">{{ original_opts.app_config.verbose_name }}</a> &rsaquo;
+    <a href="{{changelist_url}}">{{original_opts.verbose_name_plural|capfirst}}</a> &rsaquo;
     <a href="{{change_url}}">{{original|truncatewords:"18"}}</a> &rsaquo;
     <a href="../">{% trans "History" %}</a> &rsaquo;
     {% blocktrans with original_opts.verbose_name as verbose_name %}Revert {{verbose_name}}{% endblocktrans %}
@@ -15,6 +15,9 @@
 
 {% block submit_buttons_bottom %}
   {% include "simple_history/submit_line.html" %}
+{% endblock %}
+
+{% block object-tools %}
 {% endblock %}
 
 {% block form_top %}
